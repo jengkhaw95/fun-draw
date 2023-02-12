@@ -1,4 +1,8 @@
-import React, {MouseEventHandler} from "react";
+import React, {
+  MouseEventHandler,
+  PointerEventHandler,
+  TouchEventHandler,
+} from "react";
 import {useBoardContext} from "./App";
 
 interface BoxProps {
@@ -6,7 +10,7 @@ interface BoxProps {
   x: number;
   y: number;
   setSelectedElementId: (id: string) => void;
-  handleMouseDown: MouseEventHandler;
+  handleMouseDown: PointerEventHandler;
 }
 
 const randomColor = (n: number) => {
@@ -61,7 +65,7 @@ function Box({id, x, y, handleMouseDown}: BoxProps) {
       )}-500`} rounded w-8 h-8 absolute border`}
       style={{top: `${y}px`, left: `${x}px`}}
       data-elementid={id}
-      onMouseDown={handleMouseDown}
+      onPointerDown={handleMouseDown}
     ></div>
   );
 }

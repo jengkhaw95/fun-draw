@@ -1,7 +1,8 @@
 import {
   createContext,
-  MouseEventHandler,
+  PointerEventHandler,
   PropsWithChildren,
+  TouchEventHandler,
   useContext,
   useReducer,
   useRef,
@@ -41,9 +42,9 @@ const BoardContext = createContext<
   BoardStateType &
     BoardMetaType & {createElement: () => void} & {
       setSelectedElementId: (id: string) => void;
-    } & {handleMouseDown: MouseEventHandler} & {
-      handleMouseMove: MouseEventHandler;
-    } & {handleMouseUp: MouseEventHandler}
+    } & {handleMouseDown: PointerEventHandler} & {
+      handleMouseMove: PointerEventHandler;
+    } & {handleMouseUp: PointerEventHandler}
 >({
   ...DEFAULT_STATE,
   createElement: () => {},
@@ -160,9 +161,10 @@ function BoardContextProvider({children}: PropsWithChildren) {
     });
   };
 
-  const handleMouseDown: MouseEventHandler = (e) => {
+  const handleMouseDown: PointerEventHandler = (e) => {
     e.preventDefault();
     console.log("Dragging");
+    console.log(e);
     const {left, top} = e.currentTarget.getBoundingClientRect();
     const elementId = e.currentTarget.getAttribute("data-elementid");
     if (!elementId) {
@@ -176,7 +178,7 @@ function BoardContextProvider({children}: PropsWithChildren) {
     //console.log(e.clientX, e.clientY);
   };
 
-  const handleMouseMove: MouseEventHandler = (e) => {
+  const handleMouseMove: PointerEventHandler = (e) => {
     e.preventDefault();
     if (
       !state.selectingId ||
@@ -222,7 +224,7 @@ function BoardContextProvider({children}: PropsWithChildren) {
     setElementPos({x, y});
   };
 
-  const handleMouseUp: MouseEventHandler = (e) => {
+  const handleMouseUp: PointerEventHandler = (e) => {
     e.preventDefault();
     console.log("Release");
     dispatch({
@@ -260,8 +262,8 @@ function Main() {
   return (
     <div
       className="flex flex-col items-center justify-center min-h-screen w-screen"
-      onMouseMove={handleMouseMove}
-      onMouseUp={handleMouseUp}
+      onPointerMove={handleMouseMove}
+      onPointerUp={handleMouseUp}
     >
       <Board />
     </div>
