@@ -4,6 +4,7 @@ import {
   PropsWithChildren,
   TouchEventHandler,
   useContext,
+  useEffect,
   useReducer,
   useRef,
 } from "react";
@@ -231,6 +232,21 @@ function BoardContextProvider({children}: PropsWithChildren) {
       type: "CLEAR_FOCUS",
     });
   };
+
+  // Temp using this to prevent scrolling on iOS
+  useEffect(() => {
+    const h = (e: any) => {
+      if (e.target.tagName === "BUTTON") {
+      } else {
+        e.preventDefault();
+      }
+    };
+    window.addEventListener("touchstart", h, {passive: false});
+
+    return () => {
+      window.removeEventListener("touchstart", h);
+    };
+  }, []);
 
   return (
     <BoardContext.Provider

@@ -38,7 +38,7 @@ export default function Board() {
     useBoardContext();
 
   return (
-    <>
+    <div className="pb-40 space-y-4">
       <Panel />
       <div ref={rootRef} className="h-96 w-96 border relative">
         {elements.map((el: any) => (
@@ -52,7 +52,7 @@ export default function Board() {
           />
         ))}
       </div>
-    </>
+    </div>
   );
 }
 
